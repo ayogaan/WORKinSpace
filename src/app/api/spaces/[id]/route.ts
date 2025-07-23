@@ -1,4 +1,4 @@
-// app/api/spaces/[id]/route.ts
+// src/app/api/spaces/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
 const mockSpaces = [
@@ -18,38 +18,20 @@ const mockSpaces = [
     },
 ];
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    const space = mockSpaces.find((s) => s.id === params.id);
+export async function GET(
+    request: NextRequest,
+    context: { params: { id: string } } // ✅ NO destructuring here
+) {
+    const { id } = context.params;
+
+    const space = mockSpaces.find((s) => s.id === id);
+
     if (!space) {
-        return NextResponse.json({ message: 'Not found' }, { status: 404 });
-    }
-    return NextResponse.json(space);
-}
-
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-    const index = mockSpaces.findIndex((s) => s.id === params.id);
-    if (index === -1) {
-        return NextResponse.json({ message: 'Not found' }, { status: 404 });
+        return NextResponse.json(
+            { success: false, message: 'Space not found' },
+            { status: 404 }
+        );
     }
 
-    const body = await req.json();
-    mockSpaces[index] = { ...mockSpaces[index], ...body };
-
-    return NextResponse.json({
-        message: 'Space updated',
-        data: mockSpaces[index],
-    });
-}
-
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-    const index = mockSpaces.findIndex((s) => s.id === params.id);
-    if (index === -1) {
-        return NextResponse.json({ message: 'Not found' }, { status: 404 });
-    }
-
-    const deleted = mockSpaces.splice(index, 1);
-    return NextResponse.json({
-        message: 'Space deleted',
-        data: deleted[0],
-    });
+    return NextResponse.json({ success: true, data: space });
 }
