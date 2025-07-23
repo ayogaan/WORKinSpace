@@ -26,7 +26,7 @@ export default function ContactUs() {
             Got Questions ?<br></br> We Have an Aswer
           </p>
           <p className="text-gray-600">
-            Here's everything you might be wondering before joining us - from
+            Here is everything you might be wondering before joining us - from
             how <br></br> to book to whats included and how flexible it really
             is.
           </p>

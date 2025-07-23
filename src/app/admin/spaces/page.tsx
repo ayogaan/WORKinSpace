@@ -1,12 +1,13 @@
 "use client";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
 import { useState } from "react";
 import { getSpaces } from "../../services/SpaceServices";
 import { useEffect } from "react";
 import {useRouter} from 'next/navigation';
-
-const columns: GridColDef<(any)[number]>[] = [
+import { Space } from "@/app/types/space";
+import { GridRowSelectionModel } from '@mui/x-data-grid';
+const columns: GridColDef<(Space)>[] = [
   { field: "id", headerName: "ID", width: 90 },
   {
     field: "name",
@@ -33,7 +34,7 @@ const columns: GridColDef<(any)[number]>[] = [
 ];
 
 export default function DataGridDemo() {
-  const [spaces, setSpaces] = useState<any[]>([]);
+  const [spaces, setSpaces] = useState<Space[]>([]);
   const router = useRouter();
   const getData = async () => {
     try {
@@ -51,8 +52,8 @@ export default function DataGridDemo() {
     getData();
   }, []);
 
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const handleSelectionChange = (newSelection: any) => {
+  const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+  const handleSelectionChange = (newSelection: GridRowSelectionModel) => {
     const selectedIDs = newSelection.ids;
     setSelectedRows([...selectedIDs]);
   };

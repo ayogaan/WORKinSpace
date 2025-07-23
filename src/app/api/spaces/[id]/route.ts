@@ -1,7 +1,7 @@
 // app/api/spaces/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-let mockSpaces = [
+const mockSpaces = [
     {
         id: '1',
         name: 'Hot Desk Area A',

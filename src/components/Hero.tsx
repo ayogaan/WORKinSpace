@@ -3,7 +3,6 @@ import Image from "next/image";
 import bgImage from "./photo-1519155031214-e8d583928bf2.avif";
 import Button from "./Button";
 import Marquee from "react-fast-marquee";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 export default function Hero() {
   return (
