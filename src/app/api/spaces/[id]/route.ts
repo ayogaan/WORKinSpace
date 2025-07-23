@@ -18,20 +18,10 @@ const mockSpaces = [
     },
 ];
 
-export async function GET(
-    request: NextRequest,
-    context: { params: { id: string } } // ✅ NO destructuring here
-) {
-    const { id } = context.params;
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+    const id = params.id; // Extract the dynamic segment
+    // Fetch or process data based on the id
+    const data = { id }; // Replace with actual data fetching logic
+    return NextResponse.json(data);
 
-    const space = mockSpaces.find((s) => s.id === id);
-
-    if (!space) {
-        return NextResponse.json(
-            { success: false, message: 'Space not found' },
-            { status: 404 }
-        );
-    }
-
-    return NextResponse.json({ success: true, data: space });
 }
