@@ -1,5 +1,4 @@
 // src/app/api/spaces/[id]/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 
 const mockSpaces = [
@@ -20,10 +19,12 @@ const mockSpaces = [
 ];
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } } // ✅ NO destructuring here
 ) {
-  const space = mockSpaces.find((s) => s.id === params.id);
+  const { id } = context.params;
+
+  const space = mockSpaces.find((s) => s.id === id);
 
   if (!space) {
     return NextResponse.json(
